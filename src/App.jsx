@@ -295,31 +295,39 @@ function App() {
         )}
       </div>
       {generatedImage && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/90 px-6 backdrop-blur-sm">
-          <p className="animate-pulse text-center font-serif-cn text-lg text-[#e8c37d]">
-            长按图片保存到手机
-          </p>
-          <button
-            type="button"
-            className="seal-btn seal-btn-compact mb-1 w-full max-w-sm"
-            onClick={handleDownloadPoster}
-          >
-            点击保存到相册
-          </button>
-          <img
-            src={generatedImage}
-            alt="生成的命理牌"
-            className="max-h-[68vh] w-full max-w-sm rounded-xl border border-[#e5c27e]/60 shadow-[0_0_25px_rgba(251,191,36,0.22)]"
-            style={{
-              WebkitTouchCallout: 'default',
-              pointerEvents: 'auto',
-              userSelect: 'auto',
-            }}
-            draggable={false}
-          />
-          <button className="ink-btn min-w-28" type="button" onClick={() => setGeneratedImage('')}>
-            关闭
-          </button>
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-y-auto bg-black/90 p-4 backdrop-blur-sm">
+          <div className="flex w-full max-w-md flex-col items-center gap-4 py-2">
+            <p className="animate-pulse shrink-0 text-center font-serif-cn text-lg text-[#e8c37d]">
+              长按图片保存到手机
+            </p>
+            <img
+              src={generatedImage}
+              alt="生成的命理牌"
+              className="max-h-[65vh] w-auto max-w-full object-contain rounded-lg border border-[#e5c27e]/60 shadow-[0_0_25px_rgba(251,191,36,0.22)]"
+              style={{
+                WebkitTouchCallout: 'default',
+                pointerEvents: 'auto',
+                userSelect: 'auto',
+              }}
+              draggable={false}
+            />
+            <div className="flex w-full max-w-sm shrink-0 flex-col gap-3 sm:flex-row sm:gap-3">
+              <button
+                type="button"
+                className="seal-btn seal-btn-compact flex-1 sm:min-h-[48px]"
+                onClick={handleDownloadPoster}
+              >
+                点击保存到相册
+              </button>
+              <button
+                className="ink-btn flex-1 sm:min-h-[48px]"
+                type="button"
+                onClick={() => setGeneratedImage('')}
+              >
+                关闭
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </main>
