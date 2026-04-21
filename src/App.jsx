@@ -146,6 +146,17 @@ function App() {
     }
   }
 
+  function handleDownloadPoster() {
+    if (!generatedImage) return
+    const link = document.createElement('a')
+    link.href = generatedImage
+    link.download = '我的职场宫斗命盘.png'
+    link.rel = 'noopener'
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+  }
+
   const currentQuestion = questions[currentQuestionIndex]
 
   return (
@@ -284,16 +295,29 @@ function App() {
         )}
       </div>
       {generatedImage && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 bg-black/90 px-6 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-black/90 px-6 backdrop-blur-sm">
           <p className="animate-pulse text-center font-serif-cn text-lg text-[#e8c37d]">
             长按图片保存到手机
           </p>
+          <button
+            type="button"
+            className="seal-btn seal-btn-compact mb-1 w-full max-w-sm"
+            onClick={handleDownloadPoster}
+          >
+            点击保存到相册
+          </button>
           <img
             src={generatedImage}
             alt="生成的命理牌"
-            className="max-h-[78vh] w-full max-w-sm rounded-xl border border-[#e5c27e]/60 shadow-[0_0_25px_rgba(251,191,36,0.22)]"
+            className="max-h-[68vh] w-full max-w-sm rounded-xl border border-[#e5c27e]/60 shadow-[0_0_25px_rgba(251,191,36,0.22)]"
+            style={{
+              WebkitTouchCallout: 'default',
+              pointerEvents: 'auto',
+              userSelect: 'auto',
+            }}
+            draggable={false}
           />
-          <button className="ink-btn min-w-28" onClick={() => setGeneratedImage('')}>
+          <button className="ink-btn min-w-28" type="button" onClick={() => setGeneratedImage('')}>
             关闭
           </button>
         </div>

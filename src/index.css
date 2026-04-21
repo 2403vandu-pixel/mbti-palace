@@ -170,6 +170,13 @@ body {
   animation: seal-pulse 3.2s ease-in-out infinite;
 }
 
+.seal-btn-compact {
+  margin-top: 0;
+  padding: 11px 22px;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+}
+
 @keyframes title-glimmer {
   0%,
   100% {
