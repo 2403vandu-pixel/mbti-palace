@@ -1,0 +1,380 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #111111;
+  --color-paper: #e5e5e5;
+  --color-gold: #c8a55d;
+  --color-gold-light: #e6c983;
+  --font-serif-cn: "STSong", "Songti SC", "KaiTi", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Microsoft YaHei", ui-sans-serif, system-ui, sans-serif;
+  background: radial-gradient(circle at 50% -20%, #1a1a2a 0%, #111111 58%, #09090d 100%);
+  color: #e5e5e5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+@layer components {
+  .gold-btn {
+    @apply rounded-xl border border-gold/60 bg-gradient-to-r from-[#6d4c1e] via-[#b58a3a] to-[#7d5a27] px-4 py-3 text-sm font-semibold tracking-wide text-[#fff4da] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70;
+  }
+
+  .ink-btn {
+    @apply rounded-xl border border-white/20 bg-black/30 px-4 py-3 text-sm font-medium text-paper transition hover:border-gold/40;
+  }
+
+  .stamp {
+    @apply absolute -left-3 top-3 rounded-full border border-red-700/60 bg-red-700/20 px-3 py-1 text-xs tracking-[0.2em] text-red-300/90;
+  }
+
+  .stamp-right {
+    @apply -right-2 left-auto top-4;
+  }
+
+  .result-watermark {
+    @apply mt-2 text-5xl font-black tracking-[0.4em] text-white/10;
+  }
+}
+
+.shadow-gold {
+  box-shadow: 0 18px 60px rgba(198, 143, 47, 0.1), inset 0 0 0 1px rgba(226, 191, 115, 0.08);
+}
+
+.neo-panel {
+  background: linear-gradient(160deg, rgba(19, 32, 35, 0.92), rgba(56, 20, 22, 0.92));
+  backdrop-filter: blur(6px);
+}
+
+.landing-scene {
+  position: relative;
+  min-height: 82vh;
+  display: grid;
+  place-items: center;
+}
+
+.fate-mesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(115deg, rgba(251, 191, 36, 0.1) 1px, transparent 1px),
+    linear-gradient(65deg, rgba(251, 191, 36, 0.06) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.15), transparent 55%);
+  background-size: 120px 120px, 100px 100px, 100% 100%;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.palace-door {
+  position: relative;
+  width: min(100%, 430px);
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.door-leaf {
+  position: absolute;
+  top: 5%;
+  bottom: 5%;
+  width: 42%;
+  border: 1px solid rgba(216, 171, 80, 0.28);
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(15, 15, 20, 0.96), rgba(8, 8, 12, 0.98)),
+    repeating-linear-gradient(90deg, rgba(218, 174, 86, 0.08), rgba(218, 174, 86, 0.08) 1px, transparent 1px, transparent 18px);
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.55);
+}
+
+.door-left {
+  left: 0;
+  transform: perspective(800px) rotateY(16deg);
+  border-right: 1px solid rgba(180, 132, 38, 0.35);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0) 72%, rgba(232, 183, 86, 0.08) 100%),
+    linear-gradient(180deg, rgba(15, 15, 20, 0.96), rgba(8, 8, 12, 0.98)),
+    repeating-linear-gradient(90deg, rgba(218, 174, 86, 0.08), rgba(218, 174, 86, 0.08) 1px, transparent 1px, transparent 18px);
+}
+
+.door-right {
+  right: 0;
+  transform: perspective(800px) rotateY(-16deg);
+  border-left: 1px solid rgba(180, 132, 38, 0.35);
+  background:
+    linear-gradient(270deg, rgba(0, 0, 0, 0) 72%, rgba(232, 183, 86, 0.08) 100%),
+    linear-gradient(180deg, rgba(15, 15, 20, 0.96), rgba(8, 8, 12, 0.98)),
+    repeating-linear-gradient(90deg, rgba(218, 174, 86, 0.08), rgba(218, 174, 86, 0.08) 1px, transparent 1px, transparent 18px);
+}
+
+.door-glow {
+  position: absolute;
+  top: 6%;
+  bottom: 6%;
+  left: 49%;
+  width: 2%;
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.06), rgba(251, 191, 36, 0.55), rgba(251, 191, 36, 0.06));
+  filter: blur(8px);
+  box-shadow: 0 0 45px rgba(251, 191, 36, 0.45);
+}
+
+.landing-content {
+  position: relative;
+  z-index: 2;
+  width: 88%;
+  text-align: center;
+}
+
+.landing-title {
+  margin: 0;
+  font-family: "STSong", "Songti SC", "KaiTi", serif;
+  font-size: clamp(2rem, 9vw, 2.8rem);
+  letter-spacing: 0.18em;
+  color: #fbbf24;
+  text-shadow: 0 0 10px rgba(251, 191, 36, 0.35), 0 0 26px rgba(251, 191, 36, 0.2);
+  animation: title-glimmer 5.5s ease-in-out infinite;
+}
+
+.landing-subtitle {
+  margin: 18px auto 0;
+  width: 92%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(12, 11, 18, 0.38), rgba(26, 22, 18, 0.28));
+  backdrop-filter: blur(4px);
+  color: rgba(238, 228, 205, 0.94);
+  line-height: 1.85;
+  font-family: "STSong", "Songti SC", serif;
+  font-size: 0.9rem;
+}
+
+.seal-btn {
+  margin-top: 26px;
+  border: 1px solid rgba(255, 207, 112, 0.65);
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 25%, #f3c96a 0%, #ba7f29 52%, #8e5c16 100%);
+  color: #fff6df;
+  padding: 12px 26px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  box-shadow: 0 0 0 1px rgba(83, 50, 14, 0.55), 0 8px 24px rgba(251, 191, 36, 0.26);
+  animation: seal-pulse 3.2s ease-in-out infinite;
+}
+
+@keyframes title-glimmer {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.12);
+  }
+}
+
+@keyframes seal-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(83, 50, 14, 0.55), 0 8px 24px rgba(251, 191, 36, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(83, 50, 14, 0.55), 0 10px 28px rgba(251, 191, 36, 0.36);
+  }
+}
+
+.result-theme-nt {
+  border-color: rgba(191, 167, 113, 0.55);
+  background: radial-gradient(circle at 15% 10%, rgba(184, 137, 57, 0.2), transparent 40%),
+    linear-gradient(160deg, rgba(16, 27, 31, 0.95), rgba(53, 21, 19, 0.95));
+  --theme-main: #caa765;
+  --theme-strong: #ead6a0;
+  --theme-soft-border: rgba(202, 167, 101, 0.35);
+}
+
+.result-theme-nf {
+  border-color: rgba(136, 111, 181, 0.55);
+  background: radial-gradient(circle at 80% 15%, rgba(124, 84, 170, 0.24), transparent 42%),
+    linear-gradient(160deg, rgba(24, 19, 39, 0.95), rgba(44, 16, 35, 0.95));
+  --theme-main: #ba96eb;
+  --theme-strong: #e1c7ff;
+  --theme-soft-border: rgba(186, 150, 235, 0.35);
+}
+
+.result-theme-sj {
+  border-color: rgba(97, 156, 147, 0.55);
+  background: radial-gradient(circle at 18% 14%, rgba(56, 143, 122, 0.22), transparent 42%),
+    linear-gradient(160deg, rgba(16, 38, 34, 0.95), rgba(24, 27, 39, 0.95));
+  --theme-main: #73c5b0;
+  --theme-strong: #b5e8dc;
+  --theme-soft-border: rgba(115, 197, 176, 0.35);
+}
+
+.result-theme-sp {
+  border-color: rgba(181, 99, 97, 0.55);
+  background: radial-gradient(circle at 80% 14%, rgba(182, 71, 73, 0.24), transparent 40%),
+    linear-gradient(160deg, rgba(41, 20, 21, 0.95), rgba(33, 24, 17, 0.95));
+  --theme-main: #d78772;
+  --theme-strong: #f0bfaf;
+  --theme-soft-border: rgba(215, 135, 114, 0.35);
+}
+
+.text-theme-main {
+  color: var(--theme-main, #caa765);
+}
+
+.text-theme-strong {
+  color: var(--theme-strong, #ead6a0);
+}
+
+.result-role-panel {
+  border-color: var(--theme-soft-border, rgba(202, 167, 101, 0.35));
+}
+
+.result-tag {
+  border-color: var(--theme-soft-border, rgba(202, 167, 101, 0.35));
+  color: var(--theme-strong, #ead6a0);
+}
+
+.tarot-card {
+  position: relative;
+  margin-inline: auto;
+  width: min(100%, 420px);
+  aspect-ratio: 9 / 16;
+  padding: 18px 20px;
+  border: double 6px var(--theme-border, #9d7a3e);
+  border-radius: 24px;
+  background: var(--theme-gradient, linear-gradient(160deg, #152129, #352120));
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(255, 216, 130, 0.09);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.tarot-card::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--theme-border, #9d7a3e);
+  opacity: 0.45;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.tarot-ornament {
+  height: 18px;
+  width: 88%;
+  margin: 0 auto;
+  opacity: 0.65;
+  background:
+    radial-gradient(circle at 50% 110%, transparent 8px, var(--theme-border, #9d7a3e) 8px, var(--theme-border, #9d7a3e) 10px, transparent 10px),
+    linear-gradient(to right, transparent 0%, var(--theme-border, #9d7a3e) 22%, var(--theme-border, #9d7a3e) 78%, transparent 100%);
+}
+
+.tarot-ornament-bottom {
+  transform: rotate(180deg);
+  margin-top: auto;
+}
+
+.tarot-header {
+  text-align: center;
+}
+
+.tarot-tag {
+  margin: 0;
+  letter-spacing: 0.28em;
+  color: #e7d3a0;
+  font-family: "STSong", "Songti SC", "KaiTi", serif;
+  font-size: clamp(1rem, 3.6vw, 1.25rem);
+}
+
+.tarot-mbti {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  color: rgba(236, 229, 207, 0.72);
+}
+
+.tarot-center {
+  margin-top: 2px;
+  text-align: center;
+}
+
+.tarot-portrait-frame {
+  width: min(72%, 250px);
+  margin: 0 auto 12px;
+  aspect-ratio: 3 / 4;
+  border: 1px solid var(--theme-border, #9d7a3e);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.36);
+  box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.52), 0 6px 16px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.tarot-portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.tarot-portrait-fallback {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: "STSong", "Songti SC", "KaiTi", serif;
+  color: rgba(236, 218, 170, 0.78);
+  letter-spacing: 0.22em;
+}
+
+.tarot-prefix {
+  margin: 0;
+  font-size: 0.76rem;
+  color: rgba(236, 220, 176, 0.86);
+  letter-spacing: 0.08em;
+}
+
+.tarot-role {
+  margin: 6px 0 0;
+  font-family: "STSong", "Songti SC", "KaiTi", serif;
+  font-size: clamp(1.25rem, 4.2vw, 1.6rem);
+  color: #f0dfb1;
+}
+
+.tarot-description {
+  margin: 4px 0 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(239, 214, 158, 0.24);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(239, 239, 239, 0.92);
+  font-size: 0.82rem;
+  line-height: 1.75;
+  text-align: justify;
+}
+
+.tarot-quote-wrap {
+  margin-top: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(239, 214, 158, 0.3);
+  background: rgba(13, 11, 10, 0.52);
+  padding: 11px 12px;
+}
+
+.tarot-quote {
+  margin: 0;
+  text-align: center;
+  font-family: "STSong", "Songti SC", "KaiTi", serif;
+  color: #f3dfb0;
+  font-size: clamp(0.95rem, 3.6vw, 1.1rem);
+  line-height: 1.65;
+}
